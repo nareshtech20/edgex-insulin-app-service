@@ -1,0 +1,10 @@
+test.txt
+debug
+*.exe
+app-insulin-service
+.vscode
+coverage.out
+logs/
+.idea
+vendor/
+bin/
