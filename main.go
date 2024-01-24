@@ -105,8 +105,7 @@ func (app *myApp) CreateAndRunAppService(serviceKey string, newServiceFactory fu
 		return -1
 	}
 
-	msg := functions.NewReadMessage()
-	msg.subscribe();
+	functions.subscribe();
 
 	return 0
 }

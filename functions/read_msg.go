@@ -7,12 +7,6 @@ import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
-type ReadMessage struct {
-}
-
-func NewReadMessage() ReadMessage {
-	return ReadMessage{}
-}
 
 var messageHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
 	fmt.Printf("Received message: %s from topic: %s\n", msg.Payload(), msg.Topic())
