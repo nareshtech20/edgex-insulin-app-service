@@ -1,4 +1,4 @@
-package functions
+package messages
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ var messageHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Messa
 	fmt.Printf("Received message: %s from topic: %s\n", msg.Payload(), msg.Topic())
 }
 
-func subscribe() {
+func Subscribe1() {
 	opts := mqtt.NewClientOptions().AddBroker("tcp://localhost:1883")
 	opts.SetDefaultPublishHandler(messageHandler)
 	client := mqtt.NewClient(opts)

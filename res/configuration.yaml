@@ -22,7 +22,7 @@ Service:
   # TODO: set this port appropriately,
   #       App service use port assignments 597xx with lower range 00-39 reserved for
   #       app-service-configurable profiles/instances, Rules Engine and examples
-  Port: 59740
+  Port: 59741
   StartupMsg: "app-insulin-service Application Service has started"
 
 # TODO: Remove section if not using HTTPS Webserver. Default protocol is HTTP if section is empty

@@ -25,10 +25,10 @@ import (
 	"reflect"
 
 	"app-insulin-service/config"
-	//"app-insulin-service/functions"
+	"app-insulin-service/functions"
 
 	//"send-command/functions"
-        "app-insulin-service/messages"
+        "read_msg/functions"
 
 	"github.com/edgexfoundry/app-functions-sdk-go/v3/pkg"
 	"github.com/edgexfoundry/app-functions-sdk-go/v3/pkg/interfaces"
@@ -106,7 +106,7 @@ func (app *myApp) CreateAndRunAppService(serviceKey string, newServiceFactory fu
 		return -1
 	}
 
-	messages.Subscribe1();
+	functions.subscribe();
 
 	return 0
 }
