@@ -48,7 +48,7 @@ COPY --from=builder /app/res/ /res/
 COPY --from=builder /app/app-insulin-service /app-insulin-service
 
 # TODO: set this port appropriatly as it is in the configuation.yaml
-EXPOSE 59740
+EXPOSE 59741
 
 ENTRYPOINT ["/app-insulin-service"]
 CMD ["-cp=consul.http://edgex-core-consul:8500", "--registry"]

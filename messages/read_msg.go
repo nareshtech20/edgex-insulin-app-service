@@ -13,7 +13,7 @@ var messageHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Messa
 }
 
 func Subscribe1() {
-	opts := mqtt.NewClientOptions().AddBroker("tcp://localhost:1883")
+	opts := mqtt.NewClientOptions().AddBroker("tcp://edgex-mqtt-broker:1883")
 	opts.SetDefaultPublishHandler(messageHandler)
 	client := mqtt.NewClient(opts)
 	token := client.Connect()

@@ -58,7 +58,11 @@ docker:
 		-t edgexfoundry/app-insulin-service:${APPVERSION} \
 		-t nexus3.edgexfoundry.org:10004/app-insulin-service:${APPVERSION} \
 		-t nareshtech20/app-insulin-service:${APPVERSION} \
-		.
+                -t nareshtech20/app-insulin-service:latest \
+ 		.
+
+dockertag:
+	docker push nareshtech20/app-insulin-service:latest
 
 # The test-attribution-txt.sh scripts are required for upstreaming to EdgeX Foundry.
 # TODO: Remove bin folder and reference to script below if NOT upstreaming to EdgeX Foundry.
