@@ -33,7 +33,7 @@ func makeMessageHandler() mqtt.MessageHandler {
 		}
 		res, err := sendCommand(device, command, "post", jsonData)
 		if err != nil {
-			log.Error("Json Marshal...")
+			log.Error("sendCommand error...%v", err)
 		}
 		log.Debug("sendCommand.."+res)
 		//go stopInsulin()
