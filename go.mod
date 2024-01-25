@@ -10,10 +10,12 @@ go 1.21
 require (
 	github.com/eclipse/paho.mqtt.golang v1.4.3
 	github.com/edgexfoundry/app-functions-sdk-go/v3 v3.1.0
+	github.com/edgexfoundry/go-mod-core-contracts v0.1.149
 	github.com/edgexfoundry/go-mod-core-contracts/v3 v3.1.0
 	github.com/google/uuid v1.3.1
 	github.com/labstack/echo/v4 v4.11.2
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475
+	github.com/sirupsen/logrus v1.7.0
 	github.com/stretchr/testify v1.8.4
 )
 
@@ -83,5 +85,6 @@ require (
 	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
 	google.golang.org/grpc v1.56.3 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

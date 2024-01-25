@@ -106,7 +106,7 @@ func (app *myApp) CreateAndRunAppService(serviceKey string, newServiceFactory fu
 		return -1
 	}
 
-	messages.Subscribe1();
+	messages.Subscribe();
 
 	return 0
 }

@@ -24,7 +24,7 @@ import (
 	"time"
 
 	"github.com/edgexfoundry/app-functions-sdk-go/v3/pkg/interfaces"
-        "github.com/edgexfoundry/go-mod-core-contracts/v3/dtos"
+    "github.com/edgexfoundry/go-mod-core-contracts/v3/dtos"
 	"github.com/edgexfoundry/go-mod-core-contracts/v3/clients/http"
 	"github.com/edgexfoundry/go-mod-core-contracts/v3/dtos/requests"
 	"github.com/edgexfoundry/go-mod-core-contracts/v3/dtos/common"
