@@ -96,7 +96,7 @@ func Subscribe() {
 
 	token = client.Subscribe("high-glucose", 0, nil)
 	token.Wait()
-	fmt.Printf("Successfully subscribed to topic: %s\n", "topic")
+	fmt.Printf("Successfully subscribed to topic: %s\n", "high-glucose")
 
 	select {} // block forever
 }
