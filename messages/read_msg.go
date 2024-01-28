@@ -99,4 +99,8 @@ func Subscribe() {
 	fmt.Printf("Successfully subscribed to topic: %s\n", "high-glucose")
 
 	select {} // block forever
+    	// Start a goroutine to keep the application running until interrupted.
+    	//go func() {
+        //	select {}
+    	//}()	
 }

@@ -106,7 +106,23 @@ func (app *myApp) CreateAndRunAppService(serviceKey string, newServiceFactory fu
 		return -1
 	}
 
-	messages.Subscribe();
+	go messages.Subscribe()
+
+        // TODO: Use this context in long running function to detect when the context is cancel for function can exit.
+        //       Remove if no long running functions
+        app.appCtx = app.service.AppContext()
+
+        // TODO: Add any custom routes your service may have for its REST API
+        if err := app.service.AddCustomRoute("/api/v3/hello", true, app.helloHandler, http.MethodGet); err != nil {
+                app.lc.Errorf("AddCustomRoute returned error: %s", err.Error())
+                return -1
+        }
+
+        if err := app.service.Run(); err != nil {
+                app.lc.Errorf("Run returned error: %s", err.Error())
+                return -1
+        }
+	//messages.Subscribe()
 
 	return 0
 }
