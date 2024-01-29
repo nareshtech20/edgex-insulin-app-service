@@ -3,7 +3,8 @@ package messages
 import (
 	"fmt"
 	"os"
-    "net/http"
+	"time"
+    	"net/http"
 	"io/ioutil"
 	"encoding/json"
 	"bytes"
@@ -21,6 +22,8 @@ type AlertData struct {
 	Value int `json:"value"`
 	Message string    `json:"message"`
 	SensorName string `json:"sensorName"`
+	TimeStamp string `json:"timeStamp"`
+	Source string `json:"source"`
 }
 
 func makeMessageHandler() mqtt.MessageHandler {
@@ -30,11 +33,13 @@ func makeMessageHandler() mqtt.MessageHandler {
 		intVar, err := strconv.Atoi(string(msg.Payload()))
 		alertData := &AlertData{
 			AssetId: 34,
-			EventCode: "INSULIN_ACTUATOR",
+			EventCode: "NUAGE_SYSTEM_EXCEPTION_ORCH",
 			DeviceName:  "Patient_Monitor_19524",
 			Value: intVar,
-			Message: "Anomaly observed for Patient_Monitor_19524 - "+string(msg.Payload()) ,
-			SensorName: "glucose",
+			Message: "Patient_Monitor_19524: Insulin actuated, current glucose - "+string(msg.Payload()) ,
+			SensorName: "insulin",
+			Source: "insulin",
+			TimeStamp: string(time.Now().Format("2006-01-02T15:04:05Z07:00")),
 		}
 
 		jsonData, err := json.Marshal(alertData)
