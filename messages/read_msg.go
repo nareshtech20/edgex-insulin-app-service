@@ -15,6 +15,13 @@ import (
 
 )
 
+type DeviceData struct {
+	AssetId int `json:"assetId"`
+	DeviceName  string    `json:"deviceName"`
+	Value int `json:"value"`
+	SensorName string `json:"sensorName"`
+}
+
 type AlertData struct {
 	AssetId int `json:"assetId"`
 	EventCode  string    `json:"eventCode"`
@@ -30,6 +37,7 @@ func makeMessageHandler() mqtt.MessageHandler {
 	return func(client mqtt.Client, msg mqtt.Message) {
 
 		fmt.Printf("Received message: %s from topic: %s\n", msg.Payload(), msg.Topic())
+		//------------------------------------
 		intVar, err := strconv.Atoi(string(msg.Payload()))
 		alertData := &AlertData{
 			AssetId: 34,
@@ -47,12 +55,31 @@ func makeMessageHandler() mqtt.MessageHandler {
 				log.Error("Json Marshal...%+v", alertData)
 		}
 
-		res, err := postData("", "", "POST", jsonData)
+		res, err := postAlertData("", "", "POST", jsonData)
 		if err != nil {
 				log.Error("Json Marshal...")
 		}
 		log.Info("postData.."+res)
+		//-------------------------------------
+		deviceData := &DeviceData{
+			AssetId: 34,
+			DeviceName:  "Patient_Monitor_19524",
+			Value: 1,
+			SensorName: "insulin",
+		}
 
+		jsonData, err = json.Marshal(deviceData)
+		if err != nil {
+				log.Error("Json Marshal...deviceData")
+		}
+
+		res, err = postLiveData("", "", "POST", jsonData)
+		if err != nil {
+				log.Error("Json Marshal...postLiveData")
+		}
+		log.Info("postLiveData.."+res)
+
+		//--------------------------------------
 		log.Info("Sending Insulin actuate command...")
 
 		device := "insulin-injector"
@@ -70,7 +97,8 @@ func makeMessageHandler() mqtt.MessageHandler {
 			log.Error("sendCommand error...%v", err)
 		}
 		log.Debug("sendCommand.."+res)
-		//go stopInsulin()
+		
+		go stopInsulin()
 	}
 }
 
@@ -96,7 +124,7 @@ func sendCommand(deviceName string, commandName string, method string, jsonData 
 	return string(respBody), nil
 }
 
-func postData(deviceName string, commandName string, method string, jsonData []byte) (string, error) {
+func postAlertData(deviceName string, commandName string, method string, jsonData []byte) (string, error) {
 
 	log.Info("Sending live data...")
 	url := "http://10.239.80.228:8085/api/alerts/createAppAlert"
@@ -116,24 +144,72 @@ func postData(deviceName string, commandName string, method string, jsonData []b
 	return string(body), nil
 }
 
-/*
+func postLiveData(deviceName string, commandName string, method string, jsonData []byte) (string, error) {
+
+	log.Info("Sending live data...")
+	url := "http://10.239.80.228:8085/assets/deviceTimeSeriesData"
+
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		log.Fatalf("Error occurred during http request: %s", err.Error())
+	}
+	defer resp.Body.Close()
+
+	// Read the response body
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalf("Error reading response body: %s", err.Error())
+	}
+
+	return string(body), nil
+}
+
+
 func stopInsulin() {
 
 	log.Info("Scheduling Insulin stop command...")
 	time.Sleep(time.Minute)
 	log.Info("Sending Insulin stop command...")
 
-	//device := "Random-Boolean-Device"
-	device := "insulin-injector"
-	command := "WriteBoolValue"
-	settings := make(map[string]string)
-	settings["Bool"] = "false"
-	settings["EnableRandomization_Bool"] = "false"
+		//-------------------------------------
+		deviceData := &DeviceData{
+			AssetId: 34,
+			DeviceName:  "Patient_Monitor_19524",
+			Value: 0,
+			SensorName: "insulin",
+		}
 
-	commandClient := command.NewCommandClient()
-	commandClient.IssueSetCommandByName(context.Background(), device, command, settings)
+		jsonData, err := json.Marshal(deviceData)
+		if err != nil {
+				log.Error("Json Marshal...deviceData")
+		}
+
+		res, err := postLiveData("", "", "POST", jsonData)
+		if err != nil {
+				log.Error("Json Marshal...postLiveData")
+		}
+		log.Info("postLiveData.."+res)
+
+		//--------------------------------------
+		log.Info("Sending Insulin actuate command...")
+
+		device := "insulin-injector"
+		command := "WriteBoolValue"
+		settings := make(map[string]string)
+		settings["Bool"] = "false"
+		settings["EnableRandomization_Bool"] = "false"
+
+		jsonData, err = json.Marshal(settings)
+		if err != nil {
+			log.Error("Json Marshal...insulin")
+		}
+		res, err = sendCommand(device, command, "post", jsonData)
+		if err != nil {
+			log.Error("sendCommand error...%v", err)
+		}
+		log.Debug("sendCommand..insulin"+res)
 }
-*/
+
 func Subscribe() {
 
 	opts := mqtt.NewClientOptions().AddBroker("tcp://edgex-mqtt-broker:1883")
