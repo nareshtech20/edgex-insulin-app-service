@@ -53,16 +53,15 @@ docker:
 	    --build-arg https_proxy \
 		-f Dockerfile \
 		--label "git_sha=$(GIT_SHA)" \
-		-t app-insulin-service:${APPVERSION} \
-		-t edgexfoundry/app-insulin-service:$(GIT_SHA) \
-		-t edgexfoundry/app-insulin-service:${APPVERSION} \
-		-t nexus3.edgexfoundry.org:10004/app-insulin-service:${APPVERSION} \
 		-t nareshtech20/app-insulin-service:${APPVERSION} \
-                -t nareshtech20/app-insulin-service:latest \
+                -t nareshtech20/app-insulin-service:4.1.1 \
+                -t nareshtech20/app-insulin-service:4.2.0 \
+                -t nareshtech20/app-insulin-service:5.1.1 \
+                -t nareshtech20/app-insulin-service:5.2.0 \
  		.
 
 dockertag:
-	docker push nareshtech20/app-insulin-service:latest
+	docker push -a nareshtech20/app-insulin-service
 
 # The test-attribution-txt.sh scripts are required for upstreaming to EdgeX Foundry.
 # TODO: Remove bin folder and reference to script below if NOT upstreaming to EdgeX Foundry.

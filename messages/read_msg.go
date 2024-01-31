@@ -59,7 +59,7 @@ func makeMessageHandler() mqtt.MessageHandler {
 		if err != nil {
 				log.Error("Json Marshal...")
 		}
-		log.Info("postData.."+res)
+		log.Info("postData2.."+res)
 		//-------------------------------------
 		deviceData := &DeviceData{
 			AssetId: 34,
@@ -168,7 +168,8 @@ func postLiveData(deviceName string, commandName string, method string, jsonData
 func stopInsulin() {
 
 	log.Info("Scheduling Insulin stop command...")
-	time.Sleep(time.Minute)
+	//time.Sleep(time.Minute)
+	time.Sleep( 5 * time.Second )
 	log.Info("Sending Insulin stop command...")
 
 		//-------------------------------------
